@@ -22,6 +22,7 @@ contract Vote {
         }
     }
 
+    // vote function requires sending 1 eth to vote, also you cant vote twice
     function vote(uint candidate) public payable {
         Voter storage sender = voters[msg.sender];
         require(!sender.voted, "Already voted.");
@@ -31,6 +32,7 @@ contract Vote {
         sender.voted = true;
     }
 
+    // withdraw the vote (and consequently, 1 eth) if already voted
     function withdrawVote() public {
         Voter storage sender = voters[msg.sender];
         require(sender.voted, "You haven't voted, no vote to withdraw");
@@ -49,6 +51,7 @@ contract Vote {
         progress_ = candidates;
     }
 
+    // get the index of the winning candidate
     function winningCandidateIndex() public view
             returns (uint winningCandidate_)
     {
@@ -61,6 +64,7 @@ contract Vote {
         }
     }
 
+    // get the winner's name
     function winnerName() public view
             returns (string memory winnerName_)
     {
